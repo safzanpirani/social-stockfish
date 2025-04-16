@@ -17,7 +17,7 @@ This project consists of the following main files:
 ## Demo
 
 <p align="center">
-  <img src="./demo.png" alt="Extension Demo">
+  <img src="./demo.png" alt="Extension Demo" width="428">
 </p>
 
 ## Configuration
