@@ -14,6 +14,10 @@ This project consists of the following main files:
 *   `ai-service.js`: Suggests integration with an AI service, possibly for analysis or interaction.
 *   `config.js`: Configuration file for the extension, requires user setup.
 
+## Demo
+
+![Extension Demo](./demo.png)
+
 ## Configuration
 
 Before using the extension, you need to configure your Google AI Studio API key:
