@@ -16,7 +16,9 @@ This project consists of the following main files:
 
 ## Demo
 
-![Extension Demo](./demo.png)
+<p align="center">
+  <img src="./demo.png" alt="Extension Demo">
+</p>
 
 ## Configuration
 
