@@ -16,6 +16,12 @@ window.onload = () => {
       // If Shift+Enter, let the default behavior happen (newline)
     }
   });
+
+  chrome.storage.local.get("geminiApiKey").then((result) => {
+    if (result.geminiApiKey) {
+      document.getElementById("geminiApiKey").value = result.geminiApiKey;
+    }
+  });
 };
 
 document.getElementById("clickMe").addEventListener("click", async () => {
@@ -59,6 +65,14 @@ document.getElementById("clickMe").addEventListener("click", async () => {
 
     const chatGoal = document.getElementById("chatGoal").value.trim();
     const romanceMode = document.getElementById("romanceMode").checked;
+    const geminiApiKey = document.getElementById("geminiApiKey").value.trim();
+
+    if (!geminiApiKey) {
+      alert("please enter your Gemini API key");
+      return;
+    }
+
+    await chrome.storage.local.set({ geminiApiKey });
 
     // Optional: Validate if chat goal is not empty
     if (!chatGoal) {

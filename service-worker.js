@@ -1,5 +1,7 @@
 import { CONFIG } from "./config.js";
 
+const GEMINI_API_KEY_STORAGE_KEY = "geminiApiKey";
+
 // Log when service worker is installed
 self.addEventListener("install", (event) => {
   console.log("Service Worker installed");
@@ -60,6 +62,11 @@ async function handleAnalysisRequest(request) {
 
 async function analyzeConversation(messages, chatGoal, romanceMode) {
   try {
+    const geminiApiKey = await getGeminiApiKey();
+    if (!geminiApiKey) {
+      throw new Error("Gemini API key is not configured. Add it in the extension popup.");
+    }
+
     const conversationHistory = messages
       .map((m) => `${m.sender}: ${m.text}`)
       .join("\n");
@@ -98,7 +105,7 @@ Do not include any other text or formatting in your response except for the JSON
 `;
 
     console.log("Preparing API request with config:", {
-      apiKey: CONFIG.GEMINI_API_KEY ? "Present" : "Missing",
+      apiKey: geminiApiKey ? "Present" : "Missing",
       historyLength: conversationHistory.length,
       promptLength: prompt.length,
     });
@@ -133,7 +140,7 @@ Do not include any other text or formatting in your response except for the JSON
     console.log("Request headers:", [...headers.entries()]);
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(geminiApiKey)}`,
       {
         method: "POST",
         mode: "cors", // Explicitly set CORS mode
@@ -177,6 +184,11 @@ Do not include any other text or formatting in your response except for the JSON
     });
     throw error;
   }
+}
+
+async function getGeminiApiKey() {
+  const result = await chrome.storage.local.get(GEMINI_API_KEY_STORAGE_KEY);
+  return result[GEMINI_API_KEY_STORAGE_KEY] || "";
 }
 
 function parseAnalysis(apiResponse) {

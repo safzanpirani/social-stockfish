@@ -22,19 +22,7 @@ This project consists of the following main files:
 
 ## Configuration
 
-Before using the extension, you need to configure your Google AI Studio API key:
-
-1.  Open the `config.js` file in the project directory.
-2.  Replace `"<insert key here>"` with your actual Gemini API key obtained from Google AI Studio.
-    ```javascript
-    // config.js
-    export const CONFIG = {
-      GEMINI_API_KEY: "YOUR_ACTUAL_API_KEY_HERE", 
-      // ... other config settings
-    };
-    ```
-3.  Save the `config.js` file.
-4.  Reload the extension in `chrome://extensions/` if it's already loaded.
+Before using the extension, paste your Google AI Studio API key into the extension popup. The key is stored in Chrome local extension storage and should not be committed into this repository.
 
 ## Installation
 
